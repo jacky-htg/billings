@@ -1,12 +1,12 @@
-# Loan Management API
-This API is used to manage customer data, loans, payment schedules, and payments within a loan management system. Each endpoint includes examples of requests and successful responses. Note that responses may vary in the event of an error.
+# Billing Engine
+The main API is used to manage payment schedules, and payments within a loan management system. The additional API is used to manage customer data, loans. Each endpoint includes examples of requests and successful responses. Note that responses may vary in the event of an error.
 
 ## Running the Application Locally
 To run this application on your local machine, follow these steps:
 1. Clone the repository:
 
 ```sh
-git clone git@github.com:jacky-htg/loans.git
+git clone git@github.com:jacky-htg/billings.git
 ```
 
 2. Execute the SQL queries in the file ./migrations/01_ddl_loans.sql to create the required database tables.
@@ -25,7 +25,82 @@ go mod tidy
 go run main.go
 ```
 
-## API List
+## Main API
+
+### 1. Get Payment Schedule
+- Endpoint: GET /loans/:loanId/schedule
+- Deskripsi: Retrieves the payment schedule for a specific loan.
+- Request:
+```bash
+curl --location 'localhost:8080/loans/1/schedule' \
+--header 'Authorization: Bearer your-secret-token'
+```
+- Response:
+```json
+[
+    {"installment_number":1,"due_date":"2024-08-20","amount":110000,"status":"Unpaid"},
+    {"installment_number":2,"due_date":"2024-08-27","amount":110000,"status":"Unpaid"},
+    {"installment_number":3,"due_date":"2024-09-03","amount":110000,"status":"Unpaid"},
+    ...
+    {"installment_number":50,"due_date":"2025-07-29","amount":110000,"status":"Unpaid"}
+]
+```
+
+### 2. Make Payment
+- Endpoint: POST /loans/:loanId/payment
+- Deskripsi: Makes a payment for a specific loan installment.
+- Request:
+```bash
+curl --location 'localhost:8080/loans/1/payment' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer your-secret-token' \
+--data '{
+    "installment_number": 1,
+    "date": "2024-08-13",
+    "amount": 110000 
+}'
+```
+- Response:
+```json
+{
+    "payment_id": 1,
+    "message": "Payment successfully recorded"
+}
+```
+
+### 3. Get Outstanding Amount
+- Endpoint: GET /loans/:loanId/outstanding
+- Deskripsi: Retrieves the outstanding amount for a specific loan.
+- Request:
+```bash
+curl --location 'localhost:8080/loans/1/outstanding' \
+--header 'Authorization: Bearer your-secret-token'
+```
+- Response:
+```json
+{
+    "loan_id": 1,
+    "outstanding_amount": 4900000
+}
+```
+
+### 4. Check Delinquent Status
+- Endpoint: GET /loans/:loanId/delinquent
+- Deskripsi: Checks whether the borrower is delinquent.
+- Request:
+```bash
+curl --location 'localhost:8080/loans/1/delinquent' \
+--header 'Authorization: Bearer your-secret-token'
+```
+- Response:
+```json
+{
+    "is_delinquent": false,
+    "loan_id": "1"
+}
+```
+
+## Additional API
 ### 1. Create Customer
 - Endpoint: POST /customers
 - Deskripsi: Adds a new customer to the system.
@@ -107,79 +182,5 @@ curl --location 'localhost:8080/loans/1' \
     "interest_rate": 10
 }
 ```
-
-### 5. Get Payment Schedule
-- Endpoint: GET /loans/:loanId/schedule
-- Deskripsi: Retrieves the payment schedule for a specific loan.
-- Request:
-```bash
-curl --location 'localhost:8080/loans/1/schedule' \
---header 'Authorization: Bearer your-secret-token'
-```
-- Response:
-```json
-[
-    {"installment_number":1,"due_date":"2024-08-20","amount":110000,"status":"Unpaid"},
-    {"installment_number":2,"due_date":"2024-08-27","amount":110000,"status":"Unpaid"},
-    {"installment_number":3,"due_date":"2024-09-03","amount":110000,"status":"Unpaid"},
-    ...
-    {"installment_number":50,"due_date":"2025-07-29","amount":110000,"status":"Unpaid"}
-]
-```
-
-### 6. Make Payment
-- Endpoint: POST /loans/:loanId/payment
-- Deskripsi: Makes a payment for a specific loan installment.
-- Request:
-```bash
-curl --location 'localhost:8080/loans/1/payment' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer your-secret-token' \
---data '{
-    "installment_number": 1,
-    "date": "2024-08-13",
-    "amount": 110000 
-}'
-```
-- Response:
-```json
-{
-    "payment_id": 1,
-    "message": "Payment successfully recorded"
-}
-```
-
-### 7. Get Outstanding Amount
-- Endpoint: GET /loans/:loanId/outstanding
-- Deskripsi: Retrieves the outstanding amount for a specific loan.
-- Request:
-```bash
-curl --location 'localhost:8080/loans/1/outstanding' \
---header 'Authorization: Bearer your-secret-token'
-```
-- Response:
-```json
-{
-    "loan_id": 1,
-    "outstanding_amount": 4900000
-}
-```
-
-### 8. Check Delinquent Status
-- Endpoint: GET /loans/:loanId/delinquent
-- Deskripsi: Checks whether the borrower is delinquent.
-- Request:
-```bash
-curl --location 'localhost:8080/loans/1/delinquent' \
---header 'Authorization: Bearer your-secret-token'
-```
-- Response:
-```json
-{
-    "is_delinquent": false,
-    "loan_id": "1"
-}
-```
-
 ### Notes
 The responses shown above are examples of successful responses. In case of an error, the responses will vary depending on the type of error, such as validation errors, authentication errors, or server errors.
