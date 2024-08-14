@@ -6,7 +6,7 @@ To run this application on your local machine, follow these steps:
 1. Clone the repository:
 
 ```sh
-git clone git@github.com:jacky-htg/loans.git
+git clone git@github.com:jacky-htg/billings.git
 ```
 
 2. Execute the SQL queries in the file ./migrations/01_ddl_loans.sql to create the required database tables.
