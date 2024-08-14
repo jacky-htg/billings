@@ -1,34 +1,34 @@
 # Loan Management API
-API ini digunakan untuk mengelola data pelanggan, pinjaman, jadwal pembayaran, dan pembayaran dalam sistem manajemen pinjaman. Setiap endpoint dilengkapi dengan contoh permintaan dan respons sukses. Perhatikan bahwa respons dapat bervariasi jika terjadi kesalahan.
+This API is used to manage customer data, loans, payment schedules, and payments within a loan management system. Each endpoint includes examples of requests and successful responses. Note that responses may vary in the event of an error.
 
-## Cara Menjalankan Aplikasi di Laptop/PC
-Untuk menjalankan aplikasi ini secara lokal, ikuti langkah-langkah berikut:
-1. Clone repository:
+## Running the Application Locally
+To run this application on your local machine, follow these steps:
+1. Clone the repository:
 
 ```sh
 git clone git@github.com:jacky-htg/loans.git
 ```
 
-2. Eksekusi query yang ada di file ./migrations/01_ddl_loans.sql untuk membuat tabel yang diperlukan di database.
+2. Execute the SQL queries in the file ./migrations/01_ddl_loans.sql to create the required database tables.
 
-3. Salin file .env.example menjadi .env dan isi data-data konfigurasi yang diperlukan.
+3. Copy the .env.example file to a new .env file and fill in the necessary configuration details.
 
-4. Install dependencies dengan perintah:
+4. Install the dependencies with the command:
 
 ```sh
 go mod tidy
 ```
 
-5. Jalankan aplikasi dengan perintah:
+5. Run the application with the command:
 
 ```sh
 go run main.go
 ```
 
-## Daftar API
+## API List
 ### 1. Create Customer
 - Endpoint: POST /customers
-- Deskripsi: Menambahkan pelanggan baru ke sistem.
+- Deskripsi: Adds a new customer to the system.
 - Request:
 ```bash
 curl --location 'localhost:8080/customers' \
@@ -50,7 +50,7 @@ curl --location 'localhost:8080/customers' \
 
 ### 2. Get Customer by ID
 - Endpoint: GET /customers/:customerId
-- Deskripsi: Mengambil informasi pelanggan berdasarkan ID.
+- Deskripsi: Retrieves customer information by ID.
 - Request:
 ```bash
 curl --location 'localhost:8080/customers/1' \
@@ -68,7 +68,7 @@ curl --location 'localhost:8080/customers/1' \
 
 ### 3. Create Loan
 - Endpoint: POST /loans
-- Deskripsi: Membuat pinjaman baru untuk pelanggan.
+- Deskripsi: Creates a new loan for a customer.
 - Request:
 ```bash
 curl --location 'localhost:8080/loans' \
@@ -84,23 +84,23 @@ curl --location 'localhost:8080/loans' \
 - Response:
 ```json
 {
-    "loan_id": 6,
+    "loan_id": 1,
     "message": "Loan created successfully"
 }
 ```
 
 ### 4. Get Loan by ID
 - Endpoint: GET /loans/:loanId
-- Deskripsi: Mengambil informasi pinjaman berdasarkan ID.
+- Deskripsi: Retrieves loan information by ID.
 - Request:
 ```bash
-curl --location 'localhost:8080/loans/6' \
+curl --location 'localhost:8080/loans/1' \
 --header 'Authorization: Bearer your-secret-token'
 ```
 - Response:
 ```json
 {
-    "loan_id": 6,
+    "loan_id": 1,
     "customer_id": 1,
     "principal_amount": 5000000,
     "term_in_weeks": 50,
@@ -110,10 +110,10 @@ curl --location 'localhost:8080/loans/6' \
 
 ### 5. Get Payment Schedule
 - Endpoint: GET /loans/:loanId/schedule
-- Deskripsi: Mengambil jadwal pembayaran untuk pinjaman tertentu.
+- Deskripsi: Retrieves the payment schedule for a specific loan.
 - Request:
 ```bash
-curl --location 'localhost:8080/loans/6/schedule' \
+curl --location 'localhost:8080/loans/1/schedule' \
 --header 'Authorization: Bearer your-secret-token'
 ```
 - Response:
@@ -129,14 +129,14 @@ curl --location 'localhost:8080/loans/6/schedule' \
 
 ### 6. Make Payment
 - Endpoint: POST /loans/:loanId/payment
-- Deskripsi: Melakukan pembayaran cicilan pinjaman.
+- Deskripsi: Makes a payment for a specific loan installment.
 - Request:
 ```bash
-curl --location 'localhost:8080/loans/6/payment' \
+curl --location 'localhost:8080/loans/1/payment' \
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer your-secret-token' \
 --data '{
-    "installment_number": 2,
+    "installment_number": 1,
     "date": "2024-08-13",
     "amount": 110000 
 }'
@@ -144,42 +144,42 @@ curl --location 'localhost:8080/loans/6/payment' \
 - Response:
 ```json
 {
-    "payment_id": 2,
+    "payment_id": 1,
     "message": "Payment successfully recorded"
 }
 ```
 
 ### 7. Get Outstanding Amount
 - Endpoint: GET /loans/:loanId/outstanding
-- Deskripsi: Mengambil jumlah pinjaman yang belum dibayar.
+- Deskripsi: Retrieves the outstanding amount for a specific loan.
 - Request:
 ```bash
-curl --location 'localhost:8080/loans/6/outstanding' \
+curl --location 'localhost:8080/loans/1/outstanding' \
 --header 'Authorization: Bearer your-secret-token'
 ```
 - Response:
 ```json
 {
-    "loan_id": 6,
-    "outstanding_amount": 4800000
+    "loan_id": 1,
+    "outstanding_amount": 4900000
 }
 ```
 
 ### 8. Check Delinquent Status
 - Endpoint: GET /loans/:loanId/delinquent
-- Deskripsi: Memeriksa apakah peminjam termasuk delinquent.
+- Deskripsi: Checks whether the borrower is delinquent.
 - Request:
 ```bash
-curl --location 'localhost:8080/loans/6/delinquent' \
+curl --location 'localhost:8080/loans/1/delinquent' \
 --header 'Authorization: Bearer your-secret-token'
 ```
 - Response:
 ```json
 {
     "is_delinquent": false,
-    "loan_id": "6"
+    "loan_id": "1"
 }
 ```
 
-### Catatan
-Respons yang ditampilkan di atas adalah respons sukses. Dalam hal terjadi kesalahan, respons akan bervariasi tergantung pada jenis kesalahan yang terjadi, misalnya kesalahan validasi, kesalahan otentikasi, atau kesalahan server.
+### Notes
+The responses shown above are examples of successful responses. In case of an error, the responses will vary depending on the type of error, such as validation errors, authentication errors, or server errors.
