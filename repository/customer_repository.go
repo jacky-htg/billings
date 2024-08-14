@@ -6,7 +6,7 @@ import (
 	"errors"
 	"log"
 
-	"github.com/jacky-htg/loans/entity"
+	"github.com/jacky-htg/billings/entity"
 )
 
 type CustomerRepository struct {

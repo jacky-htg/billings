@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/jacky-htg/loans/entity"
+	"github.com/jacky-htg/billings/entity"
 	_ "github.com/lib/pq"
 )
 

@@ -1,4 +1,4 @@
-module github.com/jacky-htg/loans
+module github.com/jacky-htg/billings
 
 go 1.22.6
 

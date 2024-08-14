@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/jacky-htg/loans/entity"
+import "github.com/jacky-htg/billings/entity"
 
 type CreateLoanRequest struct {
 	CustomerID      int     `json:"customer_id"`

@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/jacky-htg/loans/dto"
-	"github.com/jacky-htg/loans/entity"
-	"github.com/jacky-htg/loans/repository"
+	"github.com/jacky-htg/billings/dto"
+	"github.com/jacky-htg/billings/entity"
+	"github.com/jacky-htg/billings/repository"
 	"github.com/julienschmidt/httprouter"
 )
 

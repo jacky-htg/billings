@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/jacky-htg/loans/handler"
-	"github.com/jacky-htg/loans/middleware"
+	"github.com/jacky-htg/billings/handler"
+	"github.com/jacky-htg/billings/middleware"
 	"github.com/julienschmidt/httprouter"
 )
 

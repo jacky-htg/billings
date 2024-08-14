@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/jacky-htg/loans/pkg/config"
-	"github.com/jacky-htg/loans/pkg/database"
-	"github.com/jacky-htg/loans/route"
+	"github.com/jacky-htg/billings/pkg/config"
+	"github.com/jacky-htg/billings/pkg/database"
+	"github.com/jacky-htg/billings/route"
 )
 
 func main() {

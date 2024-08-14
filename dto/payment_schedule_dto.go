@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/jacky-htg/loans/entity"
+import "github.com/jacky-htg/billings/entity"
 
 type GetPaymentScheduleResponse struct {
 	InstallmentNumber int     `json:"installment_number"`

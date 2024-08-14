@@ -1,6 +1,6 @@
 package dto
 
-import "github.com/jacky-htg/loans/entity"
+import "github.com/jacky-htg/billings/entity"
 
 type CreatePaymentRequest struct {
 	Amount            float64 `json:"amount"`
